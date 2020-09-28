@@ -24,5 +24,10 @@ namespace WPFTest
         {
             InitializeComponent();
         }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            Label1.Content = "Hi!";
+        }
     }
 }
