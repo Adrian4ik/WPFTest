@@ -6,9 +6,17 @@
         xmlns:local="clr-namespace:WPFTest"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
-    <Grid>
-        <Label x:Name="Label1" Content="Hello World!" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Height="25" Width="101"/>
-        <Button Content="Button" HorizontalAlignment="Left" Margin="20,60,0,0" VerticalAlignment="Top" Width="75" Click="Button_Click"/>
+    <Grid x:Name="MainGrid">
+        <Label x:Name="label1" Content="Hello World!" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Height="25" Width="101"/>
+        <Button x:Name="button1" Content="SampleText" HorizontalAlignment="Left" Margin="10,50,0,0" VerticalAlignment="Top" Width="75" Click="Button_Click"/>
+        <!--<DataGrid HorizontalAlignment="Left" Height="324" Margin="10,85,0,0" VerticalAlignment="Top" Width="772">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="LolKek1" CanUserSort="False" CanUserReorder="False" IsReadOnly="True" MinWidth="10" CanUserResize="False"/>
+                <DataGridTextColumn Header="LolKek2"/>
+                <DataGridTextColumn Header="LolKek3"/>
+                <DataGridTextColumn Header="LolKek4"/>
+            </DataGrid.Columns>
+        </DataGrid>-->
 
     </Grid>
 </Window>
