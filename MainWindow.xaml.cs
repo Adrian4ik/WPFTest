@@ -275,8 +275,8 @@ namespace WPFTest
                 dtgr[i].Height = 230;
                 //grid[i].StandardTab = true;
                 dtgr[i].TabIndex = 40 + i;
-                //grid[i].Rows.Add(5);
-                //grid[i].MouseDoubleClick += new MouseEventHandler(GridCellClick);
+                //dtgr[i].Rows.Add(5);
+                dtgr[i].MouseDoubleClick += new MouseButtonEventHandler(GridCellClick);
             }
 
             label1.Content = Width.ToString();
