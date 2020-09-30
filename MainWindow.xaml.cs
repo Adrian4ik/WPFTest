@@ -58,6 +58,7 @@ namespace WPFTest
 
             half_tabs = tab_count / 2;
 
+            InitGrids();
             InitControls();
             Translate();
             //timer1.Start();
@@ -67,24 +68,39 @@ namespace WPFTest
         {
             label1.Content = "Hi!";
             
-            for (int i = 0; i < 100; i++)
+            /*for (int i = 0; i < 100; i++)
             {
                 Button button = new Button();
                 MainGrid.Children.Add(button);
+            }*/
+        }
+
+        private void InitGrids()
+        {
+            grid = new Grid[tab_count];
+
+            for (int i = 0; i < tab_count; i++)
+            {
+                grid[i] = new Grid();
+                MainGrid.Children.Add(grid[i]);
+
+                grid[i].HorizontalAlignment = HorizontalAlignment.Left;
+                grid[i].VerticalAlignment = VerticalAlignment.Top;
+                grid[i].Margin = new Thickness(10 + 440 * i, 100, 0, 0);
+                grid[i].Width = 435;
+                grid[i].Height = 315;
             }
         }
 
         private void InitControls()
         {
-            grid = new Grid[tab_count];
-
             gb = new GroupBox[tab_count];
             cb = new CheckBox[tab_count];
             ping = new Button[tab_count];
             stnx = new Button[tab_count];
             timer = new Timer[tab_count];
+
             dtgr = new DataGrid[tab_count];
-            
             colN = new DataGridTextColumn[tab_count];
             colD = new DataGridTextColumn[tab_count];
             colI = new DataGridTextColumn[tab_count];
@@ -95,52 +111,9 @@ namespace WPFTest
 
             for (int i = 0; i < tab_count; i++)
             {
-                grid[i] = new Grid();
-                MainGrid.Children.Add(grid[i]);
-                //CreateChild(grid[i], MainGrid);
-
-                grid[i].HorizontalAlignment = HorizontalAlignment.Left;
-                grid[i].VerticalAlignment = VerticalAlignment.Top;
-                grid[i].Margin = new Thickness(10 + 440 * i, 100, 0, 0);
-                grid[i].Width = 435;
-                grid[i].Height = 315;
-            }
-
-            for (int i = 0; i < tab_count; i++)
-            {
                 gb[i] = new GroupBox();
                 grid[i].Children.Add(gb[i]);
 
-                cb[i] = new CheckBox();
-                grid[i].Children.Add(cb[i]);
-
-                ping[i] = new Button();
-                grid[i].Children.Add(ping[i]);
-
-                stnx[i] = new Button();
-                grid[i].Children.Add(stnx[i]);
-
-                dtgr[i] = new DataGrid();
-                grid[i].Children.Add(dtgr[i]);
-
-                colN[i] = new DataGridTextColumn();
-                dtgr[i].Columns.Add(colN[i]);
-
-                colD[i] = new DataGridTextColumn();
-                dtgr[i].Columns.Add(colD[i]);
-
-                colI[i] = new DataGridTextColumn();
-                dtgr[i].Columns.Add(colI[i]);
-
-                colT[i] = new DataGridTextColumn();
-                dtgr[i].Columns.Add(colT[i]);
-
-                colS[i] = new DataGridTextColumn();
-                dtgr[i].Columns.Add(colS[i]);
-            }
-
-            for (int i = 0; i < tab_count; i++)
-            {
                 //gb[i].Location = (i < half_tabs) ? new Point(10 + i * (830 / half_tabs), 85) : new Point(10 + (i - half_tabs) * (830 / (half_tabs + 1)), 90 + gb[i].Size.Height);
                 //gb[i].Location = (i <= half_tabs) ? new Point(10 + i * 445, 10) : new Point((i * 450) - (tab_count / 2 * 445 - 10), 335);
                 //gb[i].Name = "gb" + i.ToString();
@@ -154,7 +127,8 @@ namespace WPFTest
                 //gb[i].Controls.Add(grid[i]);
                 //Controls.Add(gb[i]);
 
-
+                cb[i] = new CheckBox();
+                grid[i].Children.Add(cb[i]);
 
                 cb[i].HorizontalAlignment = HorizontalAlignment.Left;
                 cb[i].VerticalAlignment = VerticalAlignment.Top;
@@ -162,8 +136,11 @@ namespace WPFTest
                 cb[i].Name = "cb" + i.ToString();
                 cb[i].Width = 15;
                 cb[i].Height = 14;
-                cb[i].TabIndex = 10 + i;
+                //cb[i].TabIndex = 10 + i;
                 cb[i].Checked += new RoutedEventHandler(AutopingClick);
+
+                ping[i] = new Button();
+                grid[i].Children.Add(ping[i]);
 
                 ping[i].HorizontalAlignment = HorizontalAlignment.Left;
                 ping[i].VerticalAlignment = VerticalAlignment.Top;
@@ -171,81 +148,25 @@ namespace WPFTest
                 ping[i].Name = "ping" + i.ToString();
                 ping[i].Width = 150;
                 ping[i].Height = 30;
-                ping[i].TabIndex = 20 + i;
+                //ping[i].TabIndex = 20 + i;
                 ping[i].Click += new RoutedEventHandler(PingClick);
 
-                //stnx[i] = new Button();
+                stnx[i] = new Button();
+                grid[i].Children.Add(stnx[i]);
+
                 stnx[i].HorizontalAlignment = HorizontalAlignment.Left;
                 stnx[i].VerticalAlignment = VerticalAlignment.Top;
                 stnx[i].Margin = new Thickness(280, 45, 0, 0);
                 stnx[i].Name = "stnx" + i.ToString();
                 stnx[i].Width = 150;
                 stnx[i].Height = 30;
-                stnx[i].TabIndex = 30 + i;
+                //stnx[i].TabIndex = 30 + i;
                 stnx[i].Click += new RoutedEventHandler(SettingsClick);
 
-                //timer[i] = new Timer();
-                //timer[i].Tick += new EventHandler(TimerTick);
 
 
-
-                //colN[i] = new DataGridTextColumn();
-                //colN[i].FillWeight = 150F;
-                colN[i].Header = "Name";
-                colN[i].MinWidth = 25;
-                //colN[i].Name = "colN" + i.ToString();
-                colN[i].CanUserReorder = false;
-                colN[i].CanUserResize = false;
-                colN[i].CanUserSort = false;
-                colN[i].IsReadOnly = true;
-                colN[i].Width = 205;
-
-                //colD[i] = new DataGridTextColumn();
-                colD[i].Header = "DNS";
-                colD[i].MinWidth = 25;
-                //colD[i].Name = "colD" + i.ToString();
-                colD[i].CanUserReorder = false;
-                colD[i].CanUserResize = false;
-                colD[i].CanUserSort = false;
-                colD[i].IsReadOnly = true;
-
-                //colI[i] = new DataGridTextColumn();
-                colI[i].Header = "IP";
-                colI[i].MinWidth = 25;
-                //colI[i].Name = "colI" + i.ToString();
-                colI[i].CanUserReorder = false;
-                colI[i].CanUserResize = false;
-                colI[i].CanUserSort = false;
-                colI[i].IsReadOnly = true;
-                colI[i].Width = 150;
-
-                //colT[i] = new DataGridTextColumn();
-                colT[i].Header = "Time";
-                colT[i].MinWidth = 25;
-                //colT[i].Name = "colT" + i.ToString();
-                colT[i].CanUserReorder = false;
-                colT[i].CanUserResize = false;
-                colT[i].CanUserSort = false;
-                colT[i].IsReadOnly = true;
-                colT[i].Width = 125;
-
-                //colS[i] = new DataGridTextColumn();
-                colS[i].Header = "Status";
-                colS[i].MinWidth = 25;
-                //colS[i].Name = "colS" + i.ToString();
-                colS[i].CanUserReorder = false;
-                colS[i].CanUserResize = false;
-                colS[i].CanUserSort = false;
-                colS[i].IsReadOnly = true;
-                colS[i].Width = 75;
-
-
-
-                /*DataGridCellStyle style1 = new DataGridViewCellStyle();
-                style1.Font = new Font("Microsoft Sans Serif", 14.25F, FontStyle.Regular, GraphicsUnit.Point, 204);
-
-                DataGridViewCellStyle style2 = new DataGridViewCellStyle();
-                style2.Font = new Font("Microsoft Sans Serif", 14F, FontStyle.Regular, GraphicsUnit.Point, 204);*/
+                dtgr[i] = new DataGrid();
+                grid[i].Children.Add(dtgr[i]);
 
                 dtgr[i].HorizontalAlignment = HorizontalAlignment.Left;
                 dtgr[i].VerticalAlignment = VerticalAlignment.Top;
@@ -277,6 +198,75 @@ namespace WPFTest
                 dtgr[i].TabIndex = 40 + i;
                 //dtgr[i].Rows.Add(5);
                 dtgr[i].MouseDoubleClick += new MouseButtonEventHandler(GridCellClick);
+
+                colN[i] = new DataGridTextColumn();
+                dtgr[i].Columns.Add(colN[i]);
+
+                //colN[i].FillWeight = 150F;
+                colN[i].Header = "Name";
+                colN[i].MinWidth = 25;
+                colN[i].CanUserReorder = false;
+                colN[i].CanUserResize = false;
+                colN[i].CanUserSort = false;
+                colN[i].IsReadOnly = true;
+                colN[i].Width = 205;
+
+                colD[i] = new DataGridTextColumn();
+                dtgr[i].Columns.Add(colD[i]);
+
+                colD[i].Header = "DNS";
+                colD[i].MinWidth = 25;
+                colD[i].CanUserReorder = false;
+                colD[i].CanUserResize = false;
+                colD[i].CanUserSort = false;
+                colD[i].IsReadOnly = true;
+                colD[i].Width = 150;
+
+                colI[i] = new DataGridTextColumn();
+                dtgr[i].Columns.Add(colI[i]);
+
+                colI[i].Header = "IP";
+                colI[i].MinWidth = 25;
+                colI[i].CanUserReorder = false;
+                colI[i].CanUserResize = false;
+                colI[i].CanUserSort = false;
+                colI[i].IsReadOnly = true;
+                colI[i].Width = 150;
+
+                colT[i] = new DataGridTextColumn();
+                dtgr[i].Columns.Add(colT[i]);
+
+                colT[i].Header = "Time";
+                colT[i].MinWidth = 25;
+                colT[i].CanUserReorder = false;
+                colT[i].CanUserResize = false;
+                colT[i].CanUserSort = false;
+                colT[i].IsReadOnly = true;
+                colT[i].Width = 125;
+
+                colS[i] = new DataGridTextColumn();
+                dtgr[i].Columns.Add(colS[i]);
+
+                colS[i].Header = "Status";
+                colS[i].MinWidth = 25;
+                colS[i].CanUserReorder = false;
+                colS[i].CanUserResize = false;
+                colS[i].CanUserSort = false;
+                colS[i].IsReadOnly = true;
+                colS[i].Width = 75;
+
+
+
+                //timer[i] = new Timer();
+                //timer[i].Tick += new EventHandler(TimerTick);
+
+
+
+                /*DataGridCellStyle style1 = new DataGridViewCellStyle();
+                style1.Font = new Font("Microsoft Sans Serif", 14.25F, FontStyle.Regular, GraphicsUnit.Point, 204);
+
+                DataGridViewCellStyle style2 = new DataGridViewCellStyle();
+                style2.Font = new Font("Microsoft Sans Serif", 14F, FontStyle.Regular, GraphicsUnit.Point, 204);*/
             }
 
             label1.Content = Width.ToString();
@@ -473,11 +463,6 @@ namespace WPFTest
             return result;
         }
 
-        private void Form1_Resize(object sender, EventArgs e)
-        {
-            ResizeForm();
-        }
-
         private void ResizeForm()
         {
             int indent = half_tabs * 10;
@@ -497,14 +482,15 @@ namespace WPFTest
 
 
 
-                gb[i].Width = sizew;
-                gb[i].Width = sizeh;
-                
-                //gb[i].Location = new Point(locx, locy);
+                grid[i].Width = sizew;
+                grid[i].Height = sizeh;
 
-                //grid[i].Size = new Size(sizew - 10, sizeh - 85);
+                grid[i].Margin = new Thickness(locx, locy, 0, 0);
 
-                //stnx[i].Location = new Point(sizew - 155, 45);
+                dtgr[i].Width = sizew - 15;
+                dtgr[i].Height = sizeh - 85;
+
+                stnx[i].Margin = new Thickness(sizew - 155, 45, 0, 0);
 
 
 
@@ -512,6 +498,11 @@ namespace WPFTest
 
                 //gb[i].Location = (i < half_tabs) ? new Point(10 + i * (WorkZone_width / half_tabs), 85) : new Point(10 + (i - half_tabs) * (WorkZone_width / (half_tabs + 1)), 90 + gb[i].Size.Height);
             }
+        }
+
+        private void MainGrid_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            ResizeForm();
         }
     }
 }
