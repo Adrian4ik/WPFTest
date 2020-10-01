@@ -167,69 +167,27 @@ namespace WPFTest
                 //dtgr[i].TabIndex = 40 + i;
                 //dtgr[i].Rows.Add(5);
                 //dtgr[i].Items.Add();
-                //dtgr[i].ColumnWidth = "Auto";
                 dtgr[i].MouseDoubleClick += new MouseButtonEventHandler(GridCellClick);
 
                 colN[i] = new DataGridTextColumn();
                 dtgr[i].Columns.Add(colN[i]);
-
-                //colN[i].FillWeight = 150F;
-                colN[i].Header = "Name";
-                colN[i].MinWidth = 25;
-                colN[i].CanUserReorder = false;
-                colN[i].CanUserResize = false;
-                colN[i].CanUserSort = false;
-                colN[i].IsReadOnly = true;
-                colN[i].Width = 205;
+                SetColumnStyle(colN[i], 205, false);
 
                 colD[i] = new DataGridTextColumn();
                 dtgr[i].Columns.Add(colD[i]);
-
-                colD[i].Header = "DNS";
-                colD[i].MinWidth = 25;
-                colD[i].Visibility = Visibility.Hidden;
-                colD[i].CanUserReorder = false;
-                colD[i].CanUserResize = false;
-                colD[i].CanUserSort = false;
-                colD[i].IsReadOnly = true;
-                colD[i].Width = 150;
+                SetColumnStyle(colD[i], 150, true);
 
                 colI[i] = new DataGridTextColumn();
                 dtgr[i].Columns.Add(colI[i]);
-
-                colI[i].Header = "IP";
-                colI[i].MinWidth = 25;
-                colI[i].Visibility = Visibility.Hidden;
-                colI[i].CanUserReorder = false;
-                colI[i].CanUserResize = false;
-                colI[i].CanUserSort = false;
-                colI[i].IsReadOnly = true;
-                colI[i].Width = 150;
+                SetColumnStyle(colI[i], 150, true);
 
                 colT[i] = new DataGridTextColumn();
                 dtgr[i].Columns.Add(colT[i]);
-
-                colT[i].Header = "Time";
-                colT[i].MinWidth = 25;
-                colT[i].Visibility = Visibility.Hidden;
-                colT[i].CanUserReorder = false;
-                colT[i].CanUserResize = false;
-                colT[i].CanUserSort = false;
-                colT[i].IsReadOnly = true;
-                colT[i].Width = 125;
+                SetColumnStyle(colT[i], 125, true);
 
                 colS[i] = new DataGridTextColumn();
                 dtgr[i].Columns.Add(colS[i]);
-
-                colS[i].Header = "Status";
-                colS[i].MinWidth = 25;
-                colS[i].CanUserReorder = false;
-                colS[i].CanUserResize = false;
-                colS[i].CanUserSort = false;
-                colS[i].IsReadOnly = true;
-                colS[i].Width = new DataGridLength(75, DataGridLengthUnitType.Star);
-
-
+                SetColumnStyle(colS[i], 0, false);
 
                 //timer[i] = new Timer();
                 //timer[i].Tick += new EventHandler(TimerTick);
@@ -242,6 +200,17 @@ namespace WPFTest
                 DataGridViewCellStyle style2 = new DataGridViewCellStyle();
                 style2.Font = new Font("Microsoft Sans Serif", 14F, FontStyle.Regular, GraphicsUnit.Point, 204);*/
             }
+        }
+
+        private void SetColumnStyle(DataGridTextColumn column, double width, bool visibility)
+        {
+            column.MinWidth = 25;
+            column.Visibility = (visibility) ? Visibility.Hidden : Visibility.Visible;
+            column.CanUserReorder = false;
+            column.CanUserResize = false;
+            column.CanUserSort = false;
+            column.IsReadOnly = true;
+            column.Width = (width != 0) ? width : new DataGridLength(75, DataGridLengthUnitType.Star);
         }
 
         private void Translate()
