@@ -8,15 +8,8 @@
         Title="MainWindow" Height="450" Width="800">
     <Grid x:Name="MainGrid" SizeChanged="MainGrid_SizeChanged">
         <Label x:Name="label1" Content="Hello World!" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Height="25" Width="101"/>
-        <Button x:Name="button1" Content="SampleText" HorizontalAlignment="Left" Margin="10,50,0,0" VerticalAlignment="Top" Width="75" Click="Button_Click"/>
-        <!--<DataGrid HorizontalAlignment="Left" Height="324" Margin="10,85,0,0" VerticalAlignment="Top" Width="772">
-            <DataGrid.Columns>
-                <DataGridTextColumn Header="LolKek1" CanUserSort="False" CanUserReorder="False" IsReadOnly="True" MinWidth="10" CanUserResize="False"/>
-                <DataGridTextColumn Header="LolKek2"/>
-                <DataGridTextColumn Header="LolKek3"/>
-                <DataGridTextColumn Header="LolKek4"/>
-            </DataGrid.Columns>
-        </DataGrid>-->
+        <Button x:Name="button1" Content="SampleText" HorizontalAlignment="Left" Margin="10,50,0,0" VerticalAlignment="Top" Width="75"/>
+        <Grid x:Name="GridGroup" Margin="5,90,0,0"/>
 
     </Grid>
 </Window>

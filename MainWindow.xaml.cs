@@ -26,8 +26,8 @@ namespace WPFTest
 
         int tab_count = 5;
 
-        int half_tabs;
-
+        // первая половина количества групп без округления / вторая половина количества групп с округлением в большую сторону
+        int first_half, second_half;
 
         Ping[] icmp;
 
@@ -56,23 +56,16 @@ namespace WPFTest
         {
             InitializeComponent();
 
-            half_tabs = tab_count / 2;
+            first_half = tab_count / 2;
+            second_half = (tab_count % 2 != 0) ? first_half + 1 : first_half;
+
+            MinWidth = 330 * second_half;
+            MinHeight = 400;
 
             InitGrids();
             InitControls();
             Translate();
             //timer1.Start();
-        }
-
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            label1.Content = "Hi!";
-            
-            /*for (int i = 0; i < 100; i++)
-            {
-                Button button = new Button();
-                MainGrid.Children.Add(button);
-            }*/
         }
 
         private void InitGrids()
@@ -82,7 +75,7 @@ namespace WPFTest
             for (int i = 0; i < tab_count; i++)
             {
                 grid[i] = new Grid();
-                MainGrid.Children.Add(grid[i]);
+                GridGroup.Children.Add(grid[i]);
 
                 grid[i].HorizontalAlignment = HorizontalAlignment.Left;
                 grid[i].VerticalAlignment = VerticalAlignment.Top;
@@ -107,36 +100,19 @@ namespace WPFTest
             colT = new DataGridTextColumn[tab_count];
             colS = new DataGridTextColumn[tab_count];
 
-
-
             for (int i = 0; i < tab_count; i++)
             {
                 gb[i] = new GroupBox();
                 grid[i].Children.Add(gb[i]);
-
-                //gb[i].Location = (i < half_tabs) ? new Point(10 + i * (830 / half_tabs), 85) : new Point(10 + (i - half_tabs) * (830 / (half_tabs + 1)), 90 + gb[i].Size.Height);
-                //gb[i].Location = (i <= half_tabs) ? new Point(10 + i * 445, 10) : new Point((i * 450) - (tab_count / 2 * 445 - 10), 335);
-                //gb[i].Name = "gb" + i.ToString();
-                //gb[i].Size = (i < half_tabs) ? new Size((830 - half_tabs * 10) / half_tabs, (ClientSize.Height - 96) / 2) : new Size((830 - half_tabs * 10 - 10) / (half_tabs + 1), (ClientSize.Height - 96) / 2);
-                //gb[i].Size = (i <= half_tabs) ?     new Size(435, 315)          : new Size((ClientSize.Width - 30) / 2, 315);
-                //gb[i].TabIndex = i;
-                //gb[i].Text = "";
-                //gb[i].Controls.Add(cb[i]);
-                //gb[i].Controls.Add(ping[i]);
-                //gb[i].Controls.Add(stnx[i]);
-                //gb[i].Controls.Add(grid[i]);
-                //Controls.Add(gb[i]);
 
                 cb[i] = new CheckBox();
                 grid[i].Children.Add(cb[i]);
 
                 cb[i].HorizontalAlignment = HorizontalAlignment.Left;
                 cb[i].VerticalAlignment = VerticalAlignment.Top;
-                cb[i].Margin = new Thickness(10, 20, 0, 0); // new Point(11, 20)"11,20,0,0"
-                cb[i].Name = "cb" + i.ToString();
-                cb[i].Width = 15;
-                cb[i].Height = 14;
-                //cb[i].TabIndex = 10 + i;
+                cb[i].Margin = new Thickness(5, 20, 0, 0);
+                cb[i].Width = 200;
+                cb[i].Height = 15;
                 cb[i].Checked += new RoutedEventHandler(AutopingClick);
 
                 ping[i] = new Button();
@@ -145,22 +121,18 @@ namespace WPFTest
                 ping[i].HorizontalAlignment = HorizontalAlignment.Left;
                 ping[i].VerticalAlignment = VerticalAlignment.Top;
                 ping[i].Margin = new Thickness(5, 45, 0, 0);
-                ping[i].Name = "ping" + i.ToString();
                 ping[i].Width = 150;
                 ping[i].Height = 30;
-                //ping[i].TabIndex = 20 + i;
                 ping[i].Click += new RoutedEventHandler(PingClick);
 
                 stnx[i] = new Button();
                 grid[i].Children.Add(stnx[i]);
 
-                stnx[i].HorizontalAlignment = HorizontalAlignment.Left;
+                stnx[i].HorizontalAlignment = HorizontalAlignment.Right;
                 stnx[i].VerticalAlignment = VerticalAlignment.Top;
-                stnx[i].Margin = new Thickness(280, 45, 0, 0);
-                stnx[i].Name = "stnx" + i.ToString();
+                stnx[i].Margin = new Thickness(0, 45, 5, 0);
                 stnx[i].Width = 150;
                 stnx[i].Height = 30;
-                //stnx[i].TabIndex = 30 + i;
                 stnx[i].Click += new RoutedEventHandler(SettingsClick);
 
 
@@ -168,35 +140,34 @@ namespace WPFTest
                 dtgr[i] = new DataGrid();
                 grid[i].Children.Add(dtgr[i]);
 
-                dtgr[i].HorizontalAlignment = HorizontalAlignment.Left;
-                dtgr[i].VerticalAlignment = VerticalAlignment.Top;
-                //dtgr[i] = new DataGrid();
-                /*grid[i].AllowUserToAddRows = false;
-                grid[i].AllowUserToDeleteRows = false;
-                grid[i].AllowUserToResizeColumns = false;
-                grid[i].AllowUserToResizeRows = false;
-                grid[i].AlternatingRowsDefaultCellStyle = style1;
-                grid[i].CausesValidation = false;
-                grid[i].ColumnHeadersDefaultCellStyle = style2;
-                grid[i].ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-                grid[i].Columns.AddRange(new DataGridViewTextBoxColumn[] { colN[i], colD[i], colI[i], colT[i], colS[i] });
-                grid[i].EditMode = DataGridViewEditMode.EditProgrammatically;*/
-                dtgr[i].Margin = new Thickness(5, 80, 0, 0);
-                //grid[i].MultiSelect = false;
-                dtgr[i].Name = "grid" + i.ToString();
-                dtgr[i].IsReadOnly = true;
-                //grid[i].RowHeadersVisible = false;
-                //grid[i].RowHeadersWidth = 51;
-                //grid[i].RowTemplate.Height = 25;
-                //grid[i].SelectionMode = DataGridViewSelectionMode.CellSelect;
-                //grid[i].ShowCellErrors = false;
-                //grid[i].ShowEditingIcon = false;
-                //grid[i].ShowRowErrors = false;
-                dtgr[i].Width = 425;
-                dtgr[i].Height = 230;
-                //grid[i].StandardTab = true;
-                dtgr[i].TabIndex = 40 + i;
+                /*dtgr[i].AllowUserToAddRows = false;
+                dtgr[i].AllowUserToDeleteRows = false;
+                dtgr[i].AllowUserToResizeColumns = false;
+                dtgr[i].AllowUserToResizeRows = false;
+                dtgr[i].AlternatingRowsDefaultCellStyle = style1;
+                dtgr[i].CausesValidation = false;
+                dtgr[i].ColumnHeadersDefaultCellStyle = style2;
+                dtgr[i].ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+                dtgr[i].Columns.AddRange(new DataGridViewTextBoxColumn[] { colN[i], colD[i], colI[i], colT[i], colS[i] });
+                dtgr[i].EditMode = DataGridViewEditMode.EditProgrammatically;*/
+                dtgr[i].Margin = new Thickness(5, 80, 5, 5);
+                //dtgr[i].MultiSelect = false;
+                //dtgr[i].Name = "grid" + i.ToString();
+                //dtgr[i].IsReadOnly = true;
+                //dtgr[i].RowHeadersVisible = false;
+                //dtgr[i].RowHeadersWidth = 51;
+                //dtgr[i].RowTemplate.Height = 25;
+                //dtgr[i].SelectionMode = DataGridViewSelectionMode.CellSelect;
+                //dtgr[i].ShowCellErrors = false;
+                //dtgr[i].ShowEditingIcon = false;
+                //dtgr[i].ShowRowErrors = false;
+                //dtgr[i].Width = 425;
+                //dtgr[i].Height = 230;
+                //dtgr[i].StandardTab = true;
+                //dtgr[i].TabIndex = 40 + i;
                 //dtgr[i].Rows.Add(5);
+                //dtgr[i].Items.Add();
+                //dtgr[i].ColumnWidth = "Auto";
                 dtgr[i].MouseDoubleClick += new MouseButtonEventHandler(GridCellClick);
 
                 colN[i] = new DataGridTextColumn();
@@ -216,6 +187,7 @@ namespace WPFTest
 
                 colD[i].Header = "DNS";
                 colD[i].MinWidth = 25;
+                colD[i].Visibility = Visibility.Hidden;
                 colD[i].CanUserReorder = false;
                 colD[i].CanUserResize = false;
                 colD[i].CanUserSort = false;
@@ -227,6 +199,7 @@ namespace WPFTest
 
                 colI[i].Header = "IP";
                 colI[i].MinWidth = 25;
+                colI[i].Visibility = Visibility.Hidden;
                 colI[i].CanUserReorder = false;
                 colI[i].CanUserResize = false;
                 colI[i].CanUserSort = false;
@@ -238,6 +211,7 @@ namespace WPFTest
 
                 colT[i].Header = "Time";
                 colT[i].MinWidth = 25;
+                colT[i].Visibility = Visibility.Hidden;
                 colT[i].CanUserReorder = false;
                 colT[i].CanUserResize = false;
                 colT[i].CanUserSort = false;
@@ -253,7 +227,7 @@ namespace WPFTest
                 colS[i].CanUserResize = false;
                 colS[i].CanUserSort = false;
                 colS[i].IsReadOnly = true;
-                colS[i].Width = 75;
+                colS[i].Width = new DataGridLength(75, DataGridLengthUnitType.Star);
 
 
 
@@ -268,10 +242,6 @@ namespace WPFTest
                 DataGridViewCellStyle style2 = new DataGridViewCellStyle();
                 style2.Font = new Font("Microsoft Sans Serif", 14F, FontStyle.Regular, GraphicsUnit.Point, 204);*/
             }
-
-            label1.Content = Width.ToString();
-
-            //ResizeForm();
         }
 
         private void Translate()
@@ -304,6 +274,8 @@ namespace WPFTest
                     stnx[i].Content = "Settings";
 
                     ping[i].Content = "Ping " + (i + 1) + " group";
+
+                    gb[i].Header = "Group " + (i + 1);
                 }
 
                 /*pinging = "Pinging...";
@@ -338,6 +310,8 @@ namespace WPFTest
                     stnx[i].Content = "Настройки";
 
                     ping[i].Content = "Опрос " + (i + 1) + " группы";
+
+                    gb[i].Header = "Группа " + (i + 1);
                 }
 
                 /*pinging = "Опрос...";
@@ -381,7 +355,7 @@ namespace WPFTest
 
         private void AutopingClick(object sender, EventArgs e)
         {
-            int group = Method(sender, cb);
+            int group = WhatGroup(sender, cb);
 
             label1.Content = "Autoping " + (group + 1);
 
@@ -390,7 +364,7 @@ namespace WPFTest
 
         private void PingClick(object sender, EventArgs e)
         {
-            int group = Method(sender, ping);
+            int group = WhatGroup(sender, ping);
 
             label1.Content = "Ping " + (group + 1);
 
@@ -406,7 +380,7 @@ namespace WPFTest
 
         private void SettingsClick(object sender, EventArgs e)
         {
-            int group = Method(sender, stnx);
+            int group = WhatGroup(sender, stnx);
 
             label1.Content = "Settings " + (group + 1);
 
@@ -415,7 +389,7 @@ namespace WPFTest
 
         private void TimerTick(object sender, EventArgs e)
         {
-            int group = Method(sender, timer);
+            int group = WhatGroup(sender, timer);
 
             /*button0.Enabled = false;
             ping_completed[group] = false;
@@ -426,7 +400,7 @@ namespace WPFTest
 
         private void GridCellClick(object sender, MouseEventArgs e)
         {
-            int group = Method(sender, dtgr);
+            int group = WhatGroup(sender, dtgr);
 
             label1.Content = "Grid " + (group + 1);
 
@@ -452,7 +426,7 @@ namespace WPFTest
                 SortReply(group + 1);
         }*/
 
-        private int Method(object sender, object[] compare_with)
+        private int WhatGroup(object sender, object[] compare_with)
         {
             int result;
 
@@ -465,38 +439,27 @@ namespace WPFTest
 
         private void ResizeForm()
         {
-            int indent = half_tabs * 10;
-            int count = (tab_count % 2 != 0) ? half_tabs + 1 : half_tabs;
-
-            int WorkZone_width = (int)Width - 10,
-                WorkZone_sizew = (tab_count % 2 != 0) ? (int)Width - 10 - indent : (int)Width - 20 - indent,
-                WorkZone_height = (int)Height - 96;
+            int sizew, sizeh = (int)GridGroup.ActualHeight / 2;
 
             for (int i = 0; i < tab_count; i++)
             {
-                int sizew = (i < half_tabs) ? WorkZone_sizew / half_tabs : WorkZone_sizew / count,
-                    sizeh = WorkZone_height / 2;
+                int locx, locy = 0;
 
-                int locx = (i < half_tabs) ? 10 + i * (WorkZone_width / half_tabs) : 10 + (i - half_tabs) * (WorkZone_width / count),
-                    locy = (i < half_tabs) ? 85 : 90 + sizeh;
-
-
-
-                grid[i].Width = sizew;
-                grid[i].Height = sizeh;
+                if (i < first_half)
+                {
+                    sizew = (int)GridGroup.ActualWidth / first_half;
+                    locx = i * ((int)GridGroup.ActualWidth / first_half);
+                }
+                else
+                {
+                    sizew = (int)GridGroup.ActualWidth / second_half;
+                    locx = (i - first_half) * ((int)GridGroup.ActualWidth / second_half);
+                    locy = sizeh;
+                }
 
                 grid[i].Margin = new Thickness(locx, locy, 0, 0);
-
-                dtgr[i].Width = sizew - 15;
-                dtgr[i].Height = sizeh - 85;
-
-                stnx[i].Margin = new Thickness(sizew - 155, 45, 0, 0);
-
-
-
-                //gb[i].Size = (i < half_tabs) ? new Size((WorkZone_width - half_tabs * 10) / half_tabs, (ClientSize.Height - 96) / 2) : new Size((WorkZone_width - half_tabs * 10 - 10) / (half_tabs + 1), (ClientSize.Height - 96) / 2);
-
-                //gb[i].Location = (i < half_tabs) ? new Point(10 + i * (WorkZone_width / half_tabs), 85) : new Point(10 + (i - half_tabs) * (WorkZone_width / (half_tabs + 1)), 90 + gb[i].Size.Height);
+                grid[i].Width = sizew - 4;
+                grid[i].Height = sizeh - 2;
             }
         }
 
