@@ -5,11 +5,23 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WPFTest"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="700" Width="800">
     <Grid x:Name="MainGrid" SizeChanged="MainGrid_SizeChanged">
-        <Label x:Name="label1" Content="Hello World!" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Height="25" Width="101"/>
-        <Button x:Name="button1" Content="SampleText" HorizontalAlignment="Left" Margin="10,50,0,0" VerticalAlignment="Top" Width="75"/>
-        <Grid x:Name="GridGroup" Margin="5,90,0,0"/>
+        <Label x:Name="label1" Content="Hello World!" HorizontalAlignment="Left" Margin="225,30,0,0" VerticalAlignment="Top" Height="25" Width="101"/>
+        <Button x:Name="button1" Content="SampleText" HorizontalAlignment="Left" Margin="10,25,0,0" VerticalAlignment="Top" Width="150" Height="35"/>
+        <Grid x:Name="GridGroup" Margin="5,64,0,0" Opacity="0"/>
+        <ComboBox HorizontalAlignment="Left" Margin="0" VerticalAlignment="Top" Width="150" BorderThickness="0">
+            <ComboBox.Background>
+                <LinearGradientBrush EndPoint="0,1" StartPoint="0,0">
+                    <GradientStop Color="#FFF0F0F0" Offset="0"/>
+                    <GradientStop Color="#FFE5E5E5" Offset="1"/>
+                </LinearGradientBrush>
+            </ComboBox.Background>
+            <Button Content="Открыть .INI файл"/>
+            <Button Content="Сохранить .INI файл"/>
+            <Button Content="Открыть лог файл"/>
+            <Button Content="Открыть список клиентов"/>
+        </ComboBox>
 
     </Grid>
 </Window>

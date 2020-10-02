@@ -24,7 +24,7 @@ namespace WPFTest
     {
         bool is_english = false;
 
-        int tab_count = 5;
+        int tab_count = 4;
 
         // первая половина количества групп без округления / вторая половина количества групп с округлением в большую сторону
         int first_half, second_half;
@@ -105,12 +105,14 @@ namespace WPFTest
                 gb[i] = new GroupBox();
                 grid[i].Children.Add(gb[i]);
 
+                gb[i].FontWeight = FontWeights.Bold;
+
                 cb[i] = new CheckBox();
                 grid[i].Children.Add(cb[i]);
 
                 cb[i].HorizontalAlignment = HorizontalAlignment.Left;
                 cb[i].VerticalAlignment = VerticalAlignment.Top;
-                cb[i].Margin = new Thickness(5, 20, 0, 0);
+                cb[i].Margin = new Thickness(5, 25, 0, 0);
                 cb[i].Width = 200;
                 cb[i].Height = 15;
                 cb[i].Checked += new RoutedEventHandler(AutopingClick);
